@@ -1,1430 +1,1267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Vesper City — Yesterday Lives Here</title>
-
-    <style>
-        :root {
-            --black: #08090a;
-            --deep-black: #050506;
-            --charcoal: #111315;
-            --steel: #1b1e21;
-            --steel-light: #2b2f32;
-
-            --cream: #d8d0bd;
-            --cream-dim: #8e897d;
-
-            --amber: #b68a49;
-            --amber-light: #d7ad6e;
-
-            --red: #681f27;
-            --red-bright: #8f3038;
-
-            --green: #6e8069;
-
-            --line: rgba(216, 208, 189, 0.16);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--black);
-            color: var(--cream);
-            font-family: Georgia, "Times New Roman", serif;
-            overflow-x: hidden;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        /* =========================
-           CRT / GRAIN EFFECT
-        ========================== */
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9999;
-
-            background:
-                linear-gradient(
-                    rgba(255,255,255,0.018) 50%,
-                    rgba(0,0,0,0.025) 50%
-                );
-
-            background-size: 100% 4px;
-            opacity: 0.2;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9998;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    transparent 45%,
-                    rgba(0,0,0,0.58) 100%
-                );
-        }
-
-        /* =========================
-           NAVIGATION
-        ========================== */
-
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-
-            padding: 24px 5vw;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VESPER — World Archive</title>
+
+<style>
+:root{
+    --black:#060708;
+    --black-2:#0a0c0d;
+    --black-3:#101214;
+
+    --cream:#ddd6c6;
+    --cream-soft:#aaa395;
+
+    --amber:#b18a51;
+    --amber-soft:#d0ad72;
+
+    --red:#6d242d;
+    --red-soft:#91343d;
+
+    --green:#778571;
+
+    --line:rgba(221,214,198,.14);
+    --line-bright:rgba(221,214,198,.24);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--black);
+    color:var(--cream);
+    font-family:Georgia,"Times New Roman",serif;
+    overflow-x:hidden;
+}
+
+/* ==============================
+   ATMOSPHERE
+================================ */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.018) 50%,
+            rgba(0,0,0,.025) 50%
+        );
+
+    background-size:100% 4px;
+    opacity:.18;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9998;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 45%,
+            rgba(0,0,0,.64) 100%
+        );
+}
+
+/* ==============================
+   NAV
+================================ */
+
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+
+    padding:24px 5vw;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    transition:.35s ease;
+}
+
+.nav.scrolled{
+    background:rgba(6,7,8,.91);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(12px);
+}
 
-            z-index: 1000;
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    color:var(--cream);
 
-            background: linear-gradient(
-                to bottom,
-                rgba(5,5,6,0.95),
-                rgba(5,5,6,0)
-            );
+    font-family:"Courier New",monospace;
+    font-size:11px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+}
+
+.logo-mark{
+    width:30px;
+    height:30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid var(--amber);
 
-            transition: 0.4s ease;
-        }
+    color:var(--amber-soft);
+
+    font-family:Georgia,serif;
+    font-size:13px;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    position:relative;
+
+    color:#908b81;
+
+    font-family:"Courier New",monospace;
+    font-size:9px;
+    letter-spacing:.19em;
+    text-transform:uppercase;
+
+    transition:.3s ease;
+}
+
+.nav-links a::after{
+    content:"";
+
+    position:absolute;
+    left:0;
+    bottom:-8px;
+
+    width:0;
+    height:1px;
+
+    background:var(--amber);
+
+    transition:.3s ease;
+}
+
+.nav-links a:hover{
+    color:var(--cream);
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
 
-        .nav.scrolled {
-            background: rgba(6,7,8,0.94);
-            border-bottom: 1px solid var(--line);
-            backdrop-filter: blur(10px);
-        }
+/* ==============================
+   HERO
+================================ */
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 14px;
+.hero{
+    position:relative;
+    min-height:100vh;
 
-            letter-spacing: 0.28em;
-            font-size: 13px;
-            text-transform: uppercase;
-        }
+    display:flex;
+    align-items:flex-end;
 
-        .logo-mark {
-            width: 28px;
-            height: 28px;
+    overflow:hidden;
 
-            border: 1px solid var(--amber);
+    background:
+        linear-gradient(
+            to top,
+            rgba(4,5,6,1) 0%,
+            rgba(4,5,6,.73) 22%,
+            rgba(4,5,6,.16) 65%,
+            rgba(4,5,6,.35) 100%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(3,4,5,.82),
+            rgba(3,4,5,.15)
+        ),
+        url("vesper-city.png");
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    background-size:cover;
+    background-position:center;
+}
 
-            color: var(--amber-light);
+.hero::before{
+    content:"";
 
-            font-size: 13px;
-        }
+    position:absolute;
+    inset:0;
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
+    background:
+        radial-gradient(
+            circle at 68% 32%,
+            rgba(177,138,81,.08),
+            transparent 28%
+        );
+}
 
-        .nav-links a {
-            position: relative;
+.hero::after{
+    content:"";
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    position:absolute;
+    inset:0;
 
-            font-size: 10px;
-            letter-spacing: 0.18em;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.012),
+            transparent 30%
+        );
+}
 
-            color: #aaa59a;
-            text-transform: uppercase;
+.hero-content{
+    position:relative;
+    z-index:3;
 
-            transition: 0.3s ease;
-        }
+    width:100%;
 
-        .nav-links a::after {
-            content: "";
+    padding:
+        0
+        7vw
+        9vh;
+}
 
-            position: absolute;
-            left: 0;
-            bottom: -7px;
+.archive-line{
+    display:flex;
+    align-items:center;
+    gap:14px;
 
-            width: 0;
-            height: 1px;
+    margin-bottom:22px;
 
-            background: var(--amber);
+    color:var(--amber-soft);
 
-            transition: 0.3s ease;
-        }
+    font-family:"Courier New",monospace;
+    font-size:9px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+}
 
-        .nav-links a:hover {
-            color: var(--cream);
-        }
+.archive-line::before{
+    content:"";
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+    width:30px;
+    height:1px;
 
-        /* =========================
-           HERO
-        ========================== */
+    background:var(--amber);
+}
 
-        .hero {
-            min-height: 100vh;
+.hero-title{
+    font-size:clamp(5rem,13vw,11rem);
 
-            position: relative;
+    font-weight:normal;
 
-            display: flex;
-            align-items: flex-end;
+    line-height:.78;
 
-            overflow: hidden;
+    letter-spacing:.04em;
 
-            background:
-                linear-gradient(
-                    to top,
-                    rgba(5,5,6,1) 0%,
-                    rgba(5,5,6,0.55) 35%,
-                    rgba(5,5,6,0.08) 80%
-                ),
-                linear-gradient(
-                    to right,
-                    rgba(5,5,6,0.72),
-                    rgba(5,5,6,0.18)
-                ),
-                url("vesper-city.png");
+    color:#e4ddce;
 
-            background-size: cover;
-            background-position: center;
-        }
+    text-shadow:
+        0 5px 40px rgba(0,0,0,.8);
+}
 
-        .hero::before {
-            content: "";
+.hero-subtitle{
+    margin-top:34px;
 
-            position: absolute;
-            inset: 0;
+    max-width:620px;
 
-            background:
-                linear-gradient(
-                    115deg,
-                    rgba(0,0,0,0.68),
-                    transparent 40%
-                );
-        }
+    color:#b8b0a1;
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
+    font-size:clamp(1.05rem,2vw,1.4rem);
 
-            width: 100%;
+    font-style:italic;
 
-            padding: 0 7vw 9vh;
-        }
+    line-height:1.7;
+}
 
-        .classification {
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+.hero-data{
+    display:flex;
+    flex-wrap:wrap;
 
-            font-size: 10px;
-            letter-spacing: 0.26em;
+    gap:12px 28px;
 
-            color: var(--amber-light);
+    margin-top:34px;
 
-            text-transform: uppercase;
+    color:#777169;
 
-            margin-bottom: 18px;
-        }
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.17em;
+    text-transform:uppercase;
+}
 
-        .hero-title {
-            font-size: clamp(4.5rem, 12vw, 10rem);
+.hero-data span{
+    position:relative;
+}
 
-            line-height: 0.82;
+.hero-data span:not(:last-child)::after{
+    content:"";
 
-            letter-spacing: 0.055em;
+    position:absolute;
 
-            font-weight: normal;
+    right:-16px;
+    top:50%;
 
-            text-transform: uppercase;
+    width:3px;
+    height:3px;
 
-            color: #ded6c4;
+    border-radius:50%;
 
-            text-shadow:
-                0 0 35px rgba(0,0,0,0.7),
-                0 0 5px rgba(216,208,189,0.2);
-        }
+    background:var(--amber);
+}
 
-        .hero-tagline {
-            margin-top: 30px;
+.scroll-note{
+    position:absolute;
 
-            font-size: clamp(1rem, 2vw, 1.4rem);
+    right:7vw;
+    bottom:9vh;
 
-            letter-spacing: 0.08em;
+    writing-mode:vertical-rl;
 
-            color: #b8b1a3;
+    color:#756f66;
 
-            font-style: italic;
-        }
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.23em;
+    text-transform:uppercase;
 
-        .hero-meta {
-            display: flex;
-            gap: 28px;
+    animation:pulse 2.8s infinite ease-in-out;
+}
 
-            margin-top: 30px;
+@keyframes pulse{
+    0%,100%{opacity:.35}
+    50%{opacity:1}
+}
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+/* ==============================
+   GENERAL SECTIONS
+================================ */
 
-            font-size: 9px;
+.section{
+    position:relative;
 
-            letter-spacing: 0.15em;
+    padding:135px 7vw;
+}
 
-            color: #77736c;
+.section-header{
+    max-width:760px;
+}
 
-            text-transform: uppercase;
-        }
+.eyebrow{
+    margin-bottom:16px;
 
-        /* =========================
-           SECTIONS
-        ========================== */
+    color:var(--amber);
 
-        section {
-            position: relative;
+    font-family:"Courier New",monospace;
+    font-size:9px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+}
 
-            padding: 120px 7vw;
-        }
+.section-title{
+    color:#d8d1c2;
 
-        .section-label {
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    font-size:clamp(2.7rem,5vw,5.5rem);
 
-            font-size: 9px;
+    font-weight:normal;
 
-            letter-spacing: 0.25em;
+    line-height:.95;
+}
 
-            color: var(--amber);
+.section-description{
+    margin-top:27px;
 
-            text-transform: uppercase;
+    color:#8f897f;
 
-            margin-bottom: 16px;
-        }
+    font-size:1rem;
 
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height:1.95;
+}
 
-            font-weight: normal;
+/* ==============================
+   INTRO / CITY
+================================ */
 
-            line-height: 0.95;
+.city-section{
+    background:
+        linear-gradient(
+            to bottom,
+            #050607,
+            #0b0d0f
+        );
+}
 
-            letter-spacing: 0.03em;
+.city-layout{
+    margin-top:80px;
 
-            color: #d8d1c1;
-        }
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
 
-        .section-intro {
-            max-width: 680px;
+    gap:70px;
+}
 
-            margin-top: 28px;
+.editorial{
+    padding-right:30px;
+}
 
-            color: #928d82;
+.editorial p{
+    margin-bottom:25px;
 
-            font-size: 1rem;
+    color:#979187;
 
-            line-height: 1.9;
-        }
+    font-size:1rem;
 
-        /* =========================
-           CITY
-        ========================== */
+    line-height:1.95;
+}
 
-        .city {
-            background:
-                linear-gradient(
-                    to bottom,
-                    var(--deep-black),
-                    #0d0f11
-                );
-        }
+.editorial .lead{
+    color:#c3bcad;
 
-        .city-grid {
-            margin-top: 75px;
+    font-size:1.25rem;
 
-            display: grid;
+    line-height:1.8;
+}
 
-            grid-template-columns:
-                repeat(3, 1fr);
+.quote{
+    margin-top:38px;
+    padding:25px 0 25px 24px;
 
-            border-top: 1px solid var(--line);
-            border-left: 1px solid var(--line);
-        }
+    border-left:1px solid var(--red-soft);
 
-        .city-card {
-            min-height: 285px;
+    color:#bcb3a3;
 
-            padding: 32px;
+    font-size:1.35rem;
 
-            border-right: 1px solid var(--line);
-            border-bottom: 1px solid var(--line);
+    line-height:1.6;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,0.025),
-                    rgba(0,0,0,0)
-                );
+    font-style:italic;
+}
 
-            transition:
-                background 0.35s ease,
-                transform 0.35s ease;
-        }
+/* ==============================
+   STATUS PANEL
+================================ */
 
-        .city-card:hover {
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(182,138,73,0.08),
-                    rgba(0,0,0,0)
-                );
+.status-panel{
+    align-self:start;
 
-            transform: translateY(-4px);
-        }
+    padding:27px;
 
-        .city-number {
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    border:1px solid var(--line);
 
-            font-size: 10px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.025),
+            rgba(0,0,0,.12)
+        );
 
-            color: #666159;
+    box-shadow:
+        inset 0 0 45px rgba(0,0,0,.22);
+}
 
-            letter-spacing: 0.12em;
-        }
+.status-header{
+    display:flex;
+    justify-content:space-between;
 
-        .city-card h3 {
-            margin-top: 65px;
+    padding-bottom:17px;
 
-            font-size: 1.65rem;
+    border-bottom:1px solid var(--line);
 
-            font-weight: normal;
+    color:#7d786f;
 
-            color: #d7d0c0;
-        }
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+}
 
-        .city-card p {
-            margin-top: 16px;
+.status-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
 
-            color: #77736b;
+    padding:17px 0;
 
-            line-height: 1.7;
+    border-bottom:1px solid rgba(255,255,255,.05);
 
-            font-size: 0.9rem;
-        }
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
 
-        /* =========================
-           WORLD
-        ========================== */
+.status-row span:first-child{
+    color:#66635d;
+}
 
-        .world {
-            background:
-                radial-gradient(
-                    circle at 80% 20%,
-                    rgba(104,31,39,0.11),
-                    transparent 30%
-                ),
-                #101214;
-        }
+.status-row span:last-child{
+    color:#a29b8e;
+    text-align:right;
+}
 
-        .world-layout {
-            margin-top: 80px;
+.status-active{
+    color:var(--green)!important;
+}
 
-            display: grid;
+.status-alert{
+    color:#a15b60!important;
+}
 
-            grid-template-columns: 1.1fr 0.9fr;
+/* ==============================
+   ARCHIVES
+================================ */
 
-            gap: 80px;
+.archive-section{
+    background:#0a0c0d;
+}
 
-            align-items: start;
-        }
+.archive-grid{
+    margin-top:70px;
 
-        .terminal {
-            background: #090b0c;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
 
-            border: 1px solid rgba(110,128,105,0.3);
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+}
 
-            padding: 26px;
+.archive-card{
+    min-height:285px;
 
-            box-shadow:
-                inset 0 0 40px rgba(0,0,0,0.45),
-                0 20px 60px rgba(0,0,0,0.2);
-        }
+    padding:31px;
 
-        .terminal-top {
-            display: flex;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
 
-            justify-content: space-between;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.023),
+            transparent 60%
+        );
 
-            padding-bottom: 14px;
+    transition:.35s ease;
+}
 
-            border-bottom: 1px solid rgba(110,128,105,0.22);
+.archive-card:hover{
+    background:
+        linear-gradient(
+            145deg,
+            rgba(177,138,81,.07),
+            transparent 60%
+        );
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    transform:translateY(-4px);
+}
 
-            font-size: 9px;
+.archive-number{
+    color:#625e57;
 
-            letter-spacing: 0.12em;
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+}
 
-            color: #6f7e6a;
-        }
+.archive-card h3{
+    margin-top:70px;
 
-        .terminal-body {
-            margin-top: 22px;
+    color:#d4cdbd;
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    font-size:1.55rem;
 
-            color: #798574;
+    font-weight:normal;
+}
 
-            font-size: 12px;
+.archive-card p{
+    margin-top:15px;
 
-            line-height: 2;
-        }
+    color:#79746c;
 
-        .terminal-highlight {
-            color: #c1b996;
-        }
+    font-size:.9rem;
 
-        .world-copy p {
-            margin-top: 22px;
+    line-height:1.75;
+}
 
-            color: #89847a;
+.archive-link{
+    display:inline-block;
 
-            line-height: 1.85;
+    margin-top:24px;
 
-            font-size: 0.95rem;
-        }
+    color:var(--amber-soft);
 
-        .world-quote {
-            margin-top: 35px;
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
 
-            padding-left: 20px;
+/* ==============================
+   CHARACTERS
+================================ */
 
-            border-left: 1px solid var(--red-bright);
+.characters-section{
+    background:
+        radial-gradient(
+            circle at 15% 45%,
+            rgba(109,36,45,.09),
+            transparent 28%
+        ),
+        #080a0b;
+}
 
-            color: #b9b09e;
+.character-grid{
+    margin-top:70px;
 
-            font-size: 1.3rem;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
 
-            line-height: 1.5;
+    gap:1px;
 
-            font-style: italic;
-        }
+    background:var(--line);
+    border:1px solid var(--line);
+}
 
-        /* =========================
-           CHARACTERS
-        ========================== */
+.character{
+    position:relative;
 
-        .characters {
-            background: #0a0c0d;
-        }
+    min-height:240px;
 
-        .character-grid {
-            margin-top: 70px;
+    padding:28px;
 
-            display: grid;
+    background:#0d0f10;
 
-            grid-template-columns:
-                repeat(4, 1fr);
+    overflow:hidden;
 
-            gap: 1px;
+    transition:.35s ease;
+}
 
-            background: var(--line);
+.character:hover{
+    background:#131617;
+}
 
-            border: 1px solid var(--line);
-        }
+.character::after{
+    content:"";
 
-        .character-card {
-            min-height: 250px;
+    position:absolute;
 
-            padding: 28px;
+    width:130px;
+    height:130px;
 
-            background: #0d0f10;
+    right:-45px;
+    bottom:-55px;
 
-            position: relative;
+    border-radius:50%;
 
-            overflow: hidden;
+    background:
+        radial-gradient(
+            circle,
+            rgba(177,138,81,.10),
+            transparent 70%
+        );
+}
 
-            transition: 0.35s ease;
-        }
+.case{
+    color:#5e5a53;
 
-        .character-card::before {
-            content: "";
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+}
 
-            position: absolute;
+.character h3{
+    margin-top:56px;
 
-            inset: auto -20px -40px auto;
+    color:#d7d0c0;
 
-            width: 140px;
-            height: 140px;
+    font-size:1.45rem;
 
-            border-radius: 50%;
+    font-weight:normal;
+}
 
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(182,138,73,0.11),
-                    transparent 70%
-                );
-        }
+.character .alias{
+    margin-top:8px;
 
-        .character-card:hover {
-            background: #131618;
-        }
+    color:var(--amber);
 
-        .character-code {
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
 
-            color: #59564f;
+/* ==============================
+   CLASSIFIED
+================================ */
 
-            font-size: 9px;
+.classified-section{
+    background:
+        linear-gradient(
+            135deg,
+            #120a0d,
+            #08090a
+        );
 
-            letter-spacing: 0.18em;
-        }
+    border-top:1px solid rgba(145,52,61,.18);
+}
 
-        .character-name {
-            margin-top: 55px;
+.classified-box{
+    position:relative;
 
-            font-size: 1.5rem;
+    margin-top:70px;
 
-            font-weight: normal;
+    padding:52px;
 
-            color: #d6cfbf;
-        }
+    border:1px solid rgba(145,52,61,.4);
 
-        .character-alias {
-            margin-top: 7px;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.01),
+            rgba(255,255,255,.01) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+}
 
-            color: var(--amber);
+.stamp{
+    position:absolute;
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    top:28px;
+    right:28px;
 
-            font-size: 9px;
+    padding:9px 13px;
 
-            letter-spacing: 0.13em;
+    border:1px solid var(--red-soft);
 
-            text-transform: uppercase;
-        }
+    color:#a14d57;
 
-        /* =========================
-           CLASSIFIED
-        ========================== */
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
 
-        .classified {
-            background:
-                linear-gradient(
-                    135deg,
-                    #110c0e,
-                    #0a0b0d
-                );
+    transform:rotate(2deg);
+}
 
-            border-top: 1px solid rgba(143,48,56,0.22);
-        }
+.classified-box h3{
+    color:#d8cfbd;
 
-        .classified-box {
-            margin-top: 65px;
+    font-size:2rem;
 
-            padding: 55px;
+    font-weight:normal;
+}
 
-            border: 1px solid rgba(143,48,56,0.4);
+.classified-box p{
+    max-width:700px;
 
-            position: relative;
+    margin-top:20px;
 
-            background:
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(255,255,255,0.012),
-                    rgba(255,255,255,0.012) 1px,
-                    transparent 1px,
-                    transparent 4px
-                );
-        }
+    color:#817a72;
 
-        .classified-stamp {
-            position: absolute;
+    line-height:1.9;
+}
 
-            top: 28px;
-            right: 28px;
+.classified-button{
+    display:inline-block;
 
-            padding: 8px 14px;
+    margin-top:34px;
 
-            border: 1px solid var(--red-bright);
+    padding:13px 20px;
 
-            color: #9f3b44;
+    border:1px solid var(--red-soft);
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    color:#bd858b;
 
-            font-size: 9px;
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
 
-            letter-spacing: 0.18em;
+    transition:.3s ease;
+}
 
-            transform: rotate(2deg);
-        }
+.classified-button:hover{
+    background:var(--red);
+    color:#e4cbc6;
+}
 
-        .classified-box h3 {
-            font-size: 2rem;
+/* ==============================
+   FOOTER
+================================ */
 
-            font-weight: normal;
+footer{
+    padding:55px 7vw 70px;
 
-            color: #d8cfbd;
-        }
+    background:#050606;
 
-        .classified-box p {
-            max-width: 700px;
+    border-top:1px solid var(--line);
+}
 
-            margin-top: 20px;
+.footer-top{
+    display:flex;
+    justify-content:space-between;
+    gap:35px;
+}
 
-            color: #817b73;
+.footer-name{
+    color:#cfc8b9;
 
-            line-height: 1.85;
-        }
+    font-size:1.35rem;
 
-        .access-button {
-            display: inline-block;
+    letter-spacing:.12em;
+}
 
-            margin-top: 35px;
+.footer-meta{
+    color:#5d5952;
 
-            padding: 14px 22px;
+    text-align:right;
 
-            border: 1px solid var(--red-bright);
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    line-height:1.9;
+    letter-spacing:.12em;
+}
 
-            color: #ba8186;
+.footer-bottom{
+    margin-top:45px;
+    padding-top:20px;
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    border-top:1px solid var(--line);
 
-            font-size: 9px;
+    color:#47443f;
 
-            letter-spacing: 0.18em;
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.16em;
+}
 
-            text-transform: uppercase;
+/* ==============================
+   MOBILE
+================================ */
 
-            transition: 0.3s ease;
-        }
+@media(max-width:900px){
 
-        .access-button:hover {
-            background: var(--red);
-            color: #e2cbc6;
-        }
+    .nav{
+        padding:18px 5vw;
+    }
 
-        /* =========================
-           FOOTER
-        ========================== */
+    .nav-links{
+        display:none;
+    }
 
-        footer {
-            padding: 50px 7vw 70px;
+    .hero{
+        min-height:95vh;
 
-            background: #050606;
+        background-position:61% center;
+    }
 
-            border-top: 1px solid var(--line);
-        }
+    .hero-content{
+        padding:
+            0
+            6vw
+            8vh;
+    }
 
-        .footer-top {
-            display: flex;
+    .hero-title{
+        font-size:clamp(4.2rem,18vw,7rem);
+    }
 
-            justify-content: space-between;
+    .scroll-note{
+        display:none;
+    }
 
-            gap: 30px;
-        }
+    .section{
+        padding:95px 6vw;
+    }
 
-        .footer-title {
-            font-size: 1.4rem;
+    .city-layout{
+        grid-template-columns:1fr;
+        gap:50px;
+    }
 
-            letter-spacing: 0.08em;
-        }
+    .editorial{
+        padding-right:0;
+    }
 
-        .footer-right {
-            text-align: right;
+    .archive-grid{
+        grid-template-columns:1fr;
+    }
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    .character-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-            font-size: 9px;
+    .classified-box{
+        padding:35px 24px;
+    }
 
-            line-height: 1.8;
+    .stamp{
+        position:static;
+        display:inline-block;
+        margin-bottom:25px;
+    }
 
-            color: #66635d;
+    .footer-top{
+        flex-direction:column;
+    }
 
-            letter-spacing: 0.12em;
-        }
+    .footer-meta{
+        text-align:left;
+    }
+}
 
-        .footer-bottom {
-            margin-top: 50px;
+@media(max-width:540px){
 
-            padding-top: 20px;
+    .logo{
+        font-size:9px;
+    }
 
-            border-top: 1px solid var(--line);
+    .logo-mark{
+        width:26px;
+        height:26px;
+    }
 
-            color: #504e49;
+    .hero-data{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+    }
 
-            font-family:
-                "Courier New",
-                Courier,
-                monospace;
+    .hero-data span:not(:last-child)::after{
+        display:none;
+    }
 
-            font-size: 8px;
+    .character-grid{
+        grid-template-columns:1fr;
+    }
 
-            letter-spacing: 0.15em;
-        }
+    .character{
+        min-height:205px;
+    }
 
-        /* =========================
-           MOBILE
-        ========================== */
-
-        @media (max-width: 900px) {
-
-            .nav {
-                padding: 18px 5vw;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                min-height: 92vh;
-
-                background-position:
-                    60% center;
-            }
-
-            .hero-content {
-                padding:
-                    0
-                    6vw
-                    8vh;
-            }
-
-            .hero-title {
-                font-size: clamp(
-                    3.5rem,
-                    18vw,
-                    6rem
-                );
-            }
-
-            .hero-meta {
-                flex-wrap: wrap;
-                gap: 12px 20px;
-            }
-
-            section {
-                padding:
-                    90px
-                    6vw;
-            }
-
-            .city-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .world-layout {
-                grid-template-columns: 1fr;
-                gap: 45px;
-            }
-
-            .character-grid {
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
-
-            .classified-box {
-                padding: 35px 25px;
-            }
-
-            .classified-stamp {
-                position: static;
-
-                display: inline-block;
-
-                margin-bottom: 25px;
-            }
-
-            .footer-top {
-                flex-direction: column;
-            }
-
-            .footer-right {
-                text-align: left;
-            }
-        }
-
-        @media (max-width: 520px) {
-
-            .character-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .character-card {
-                min-height: 210px;
-            }
-
-            .city-card h3 {
-                margin-top: 45px;
-            }
-
-            .terminal {
-                padding: 19px;
-                overflow-x: auto;
-            }
-
-            .terminal-body {
-                min-width: 490px;
-            }
-        }
-    </style>
+    .archive-card{
+        min-height:235px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+<nav class="nav" id="nav">
 
-    <nav class="nav" id="nav">
+    <a href="#home" class="logo">
+        <span class="logo-mark">V</span>
+        <span>Vesper Archives</span>
+    </a>
 
-        <a href="#home" class="logo">
-            <span class="logo-mark">V</span>
-            <span>Vesper Archives</span>
-        </a>
+    <div class="nav-links">
+        <a href="#city">The City</a>
+        <a href="#archives">Archives</a>
+        <a href="#characters">Characters</a>
+        <a href="#classified">Classified</a>
+    </div>
 
-        <div class="nav-links">
-            <a href="#city">The City</a>
-            <a href="#world">The World</a>
-            <a href="#characters">Characters</a>
-            <a href="#classified">Classified</a>
+</nav>
+
+
+<header class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="archive-line">
+            Vesper City / Central Archive
         </div>
 
-    </nav>
+        <h1 class="hero-title">
+            Vesper
+        </h1>
+
+        <p class="hero-subtitle">
+            A city built for tomorrow.
+            A city that never quite arrived.
+        </p>
+
+        <div class="hero-data">
+            <span>RETROFUTURISTIC NOIR</span>
+            <span>EST. 18—</span>
+            <span>STATUS: ACTIVE</span>
+            <span>SECURITY: COMPROMISED</span>
+        </div>
+
+    </div>
+
+    <div class="scroll-note">
+        scroll to access archive
+    </div>
+
+</header>
 
 
-    <!-- =========================
-         HERO
-    ========================== -->
+<section class="section city-section" id="city">
 
-    <header class="hero" id="home">
+    <div class="section-header">
 
-        <div class="hero-content">
+        <div class="eyebrow">
+            Archive 001 / The City
+        </div>
 
-            <div class="classification">
-                VESPER CITY // ARCHIVE ACCESS // PUBLIC RECORD
-            </div>
+        <h2 class="section-title">
+            Yesterday<br>
+            lives here.
+        </h2>
 
-            <h1 class="hero-title">
-                Vesper
-            </h1>
+        <p class="section-description">
+            Vesper is a city built from conflicting eras.
+            Ancient stone sits beneath experimental steel.
+            Machines designed decades ago still operate
+            alongside technologies that officially should
+            not exist.
+        </p>
 
-            <p class="hero-tagline">
-                Yesterday lives here.
+    </div>
+
+
+    <div class="city-layout">
+
+        <div class="editorial">
+
+            <p class="lead">
+                The future did arrive in Vesper.
+                It simply arrived badly.
             </p>
 
-            <div class="hero-meta">
+            <p>
+                Generations of ambitious engineers,
+                industrialists and scientists attempted
+                to turn the city into a model of tomorrow.
+                Their machines survived longer than their
+                companies, their governments and sometimes
+                their creators.
+            </p>
 
-                <span>RETROFUTURISTIC NOIR</span>
+            <p>
+                Nothing was ever truly discarded.
+                Old infrastructure was repaired.
+                New systems were built on top of older ones.
+                Entire districts became layered records of
+                technological ambition and urban decay.
+            </p>
 
-                <span>EST. 18—</span>
-
-                <span>STATUS: ACTIVE</span>
-
-                <span>SECURITY: COMPROMISED</span>
-
+            <div class="quote">
+                “Nothing in Vesper is ever truly obsolete.”
             </div>
 
         </div>
 
-    </header>
+
+        <div class="status-panel">
+
+            <div class="status-header">
+                <span>Central Archive</span>
+                <span>LIVE</span>
+            </div>
+
+            <div class="status-row">
+                <span>Infrastructure</span>
+                <span class="status-alert">Degraded</span>
+            </div>
+
+            <div class="status-row">
+                <span>Technology</span>
+                <span>Advanced / Legacy</span>
+            </div>
+
+            <div class="status-row">
+                <span>Population</span>
+                <span>Classified</span>
+            </div>
+
+            <div class="status-row">
+                <span>Altered Cases</span>
+                <span>Redacted</span>
+            </div>
+
+            <div class="status-row">
+                <span>Blackthorn</span>
+                <span class="status-active">Active</span>
+            </div>
+
+            <div class="status-row">
+                <span>Vesper Circle</span>
+                <span class="status-alert">Unknown</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-    <!-- =========================
-         THE CITY
-    ========================== -->
+<section class="section archive-section" id="archives">
 
-    <section class="city" id="city">
+    <div class="section-header">
 
-        <div class="section-label">
-            ARCHIVE 001 / VESPER
+        <div class="eyebrow">
+            Archive 002 / City Records
         </div>
 
         <h2 class="section-title">
-            The City
+            Explore Vesper.
         </h2>
 
-        <p class="section-intro">
-            Vesper was built for the future.
-            The future simply failed to arrive the way
-            its architects promised.
-            Now the city survives through old machines,
-            impossible technologies and generations of
-            repairs.
+        <p class="section-description">
+            Districts, institutions, corporations and
+            forgotten places that shaped the city.
         </p>
 
-
-        <div class="city-grid">
-
-            <article class="city-card">
-
-                <div class="city-number">
-                    DISTRICT / 01
-                </div>
-
-                <h3>The Heights</h3>
-
-                <p>
-                    Glass towers, private laboratories,
-                    inherited fortunes and the newest
-                    technology Vesper can still afford.
-                </p>
-
-            </article>
+    </div>
 
 
-            <article class="city-card">
+    <div class="archive-grid">
 
-                <div class="city-number">
-                    DISTRICT / 02
-                </div>
+        <article class="archive-card">
 
-                <h3>Old Vesper</h3>
-
-                <p>
-                    Gothic facades, forgotten theaters,
-                    ancient rail stations and the oldest
-                    secrets in the city.
-                </p>
-
-            </article>
-
-
-            <article class="city-card">
-
-                <div class="city-number">
-                    DISTRICT / 03
-                </div>
-
-                <h3>The Narrows</h3>
-
-                <p>
-                    Crowded streets, illegal markets,
-                    improvised technology and people
-                    who learned how to survive without
-                    the city's permission.
-                </p>
-
-            </article>
-
-
-            <article class="city-card">
-
-                <div class="city-number">
-                    DISTRICT / 04
-                </div>
-
-                <h3>Black District</h3>
-
-                <p>
-                    Factories, abandoned railways,
-                    industrial ruins and laboratories
-                    that officially do not exist.
-                </p>
-
-            </article>
-
-
-            <article class="city-card">
-
-                <div class="city-number">
-                    DISTRICT / 05
-                </div>
-
-                <h3>Vesper Docks</h3>
-
-                <p>
-                    Cargo yards, cranes, old warehouses
-                    and the largest underground economy
-                    in the city.
-                </p>
-
-            </article>
-
-
-            <article class="city-card">
-
-                <div class="city-number">
-                    DISTRICT / 06
-                </div>
-
-                <h3>Blackthorn</h3>
-
-                <p>
-                    An old psychiatric institution
-                    built above a much newer secret.
-                </p>
-
-            </article>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         THE WORLD
-    ========================== -->
-
-    <section class="world" id="world">
-
-        <div class="section-label">
-            ARCHIVE 002 / WORLD SYSTEMS
-        </div>
-
-        <h2 class="section-title">
-            The World
-        </h2>
-
-        <div class="world-layout">
-
-            <div class="terminal">
-
-                <div class="terminal-top">
-
-                    <span>
-                        VESPER CENTRAL ARCHIVE
-                    </span>
-
-                    <span>
-                        CONNECTION: SECURE
-                    </span>
-
-                </div>
-
-
-                <div class="terminal-body">
-
-                    &gt; INITIALIZING ARCHIVE...<br>
-
-                    &gt; CITY STATUS:
-                    <span class="terminal-highlight">
-                        ACTIVE
-                    </span>
-                    <br>
-
-                    &gt; INFRASTRUCTURE:
-                    <span class="terminal-highlight">
-                        DEGRADED
-                    </span>
-                    <br>
-
-                    &gt; TECHNOLOGY:
-                    <span class="terminal-highlight">
-                        ADVANCED / LEGACY
-                    </span>
-                    <br>
-
-                    &gt; PUBLIC TRUST:
-                    <span class="terminal-highlight">
-                        17.4%
-                    </span>
-                    <br>
-
-                    &gt; ALTERED CASES:
-                    <span class="terminal-highlight">
-                        [REDACTED]
-                    </span>
-                    <br>
-
-                    &gt; BLACKTHORN:
-                    <span class="terminal-highlight">
-                        ACTIVE
-                    </span>
-                    <br>
-
-                    &gt; VESPER CIRCLE:
-                    <span class="terminal-highlight">
-                        UNKNOWN
-                    </span>
-                    <br><br>
-
-                    &gt; WARNING:
-                    <span class="terminal-highlight">
-                        ARCHIVE INTEGRITY COMPROMISED.
-                    </span>
-
-                </div>
-
+            <div class="archive-number">
+                DISTRICT / 01
             </div>
 
+            <h3>
+                The Heights
+            </h3>
 
-            <div class="world-copy">
+            <p>
+                Wealth, private technology and families
+                who have controlled Vesper for generations.
+            </p>
 
-                <p>
-                    Vesper's technology was designed for a
-                    different century. Some of it survived.
-                    Some of it evolved.
-                    Most of it was simply repaired.
-                </p>
+            <span class="archive-link">
+                Archive pending
+            </span>
 
-                <p>
-                    The result is a city where advanced
-                    artificial intelligence can operate inside
-                    a machine that looks forty years old,
-                    where experimental medicine exists beneath
-                    abandoned factories, and where no one can
-                    quite agree on when the future actually
-                    happened.
-                </p>
+        </article>
 
-                <div class="world-quote">
-                    “Nothing in Vesper is ever truly obsolete.”
-                </div>
 
+        <article class="archive-card">
+
+            <div class="archive-number">
+                DISTRICT / 02
             </div>
 
-        </div>
+            <h3>
+                Old Vesper
+            </h3>
 
-    </section>
+            <p>
+                Gothic facades, old theaters, forgotten
+                rail lines and the oldest secrets in the city.
+            </p>
 
+            <span class="archive-link">
+                Archive pending
+            </span>
 
-    <!-- =========================
-         CHARACTERS
-    ========================== -->
+        </article>
 
-    <section class="characters" id="characters">
 
-        <div class="section-label">
-            ARCHIVE 003 / IDENTIFIED PERSONS
-        </div>
+        <article class="archive-card">
 
-        <h2 class="section-title">
-            The Players
-        </h2>
+            <div class="archive-number">
+                DISTRICT / 03
+            </div>
 
-        <p class="section-intro">
-            Vesper did not create heroes or villains.
-            It created circumstances.
-            What people became afterward was their own
-            answer to the city.
-        </p>
+            <h3>
+                The Narrows
+            </h3>
 
+            <p>
+                Crowded streets, illegal markets and
+                technology rebuilt from whatever survives.
+            </p>
 
-        <div class="character-grid">
+            <span class="archive-link">
+                Archive pending
+            </span>
 
+        </article>
 
-            <article class="character-card">
 
-                <div class="character-code">
-                    CASE / 001
-                </div>
+        <article class="archive-card">
 
-                <h3 class="character-name">
-                    Lucian Ward
-                </h3>
+            <div class="archive-number">
+                DISTRICT / 04
+            </div>
 
-                <div class="character-alias">
-                    THE NOCTURNE
-                </div>
+            <h3>
+                Black District
+            </h3>
 
-            </article>
+            <p>
+                Factories, abandoned research facilities
+                and infrastructure officially forgotten.
+            </p>
 
+            <span class="archive-link">
+                Archive pending
+            </span>
 
-            <article class="character-card">
+        </article>
 
-                <div class="character-code">
-                    CASE / 002
-                </div>
 
-                <h3 class="character-name">
-                    Jérôme Veyl
-                </h3>
+        <article class="archive-card">
 
-                <div class="character-alias">
-                    THE LAUGHING MAN
-                </div>
+            <div class="archive-number">
+                INSTITUTION / 05
+            </div>
 
-            </article>
+            <h3>
+                Blackthorn Institute
+            </h3>
 
+            <p>
+                An old psychiatric hospital with a much
+                newer secret buried beneath it.
+            </p>
 
-            <article class="character-card">
+            <span class="archive-link">
+                Archive pending
+            </span>
 
-                <div class="character-code">
-                    CASE / 003
-                </div>
+        </article>
 
-                <h3 class="character-name">
-                    Isolde Green
-                </h3>
 
-                <div class="character-alias">
-                    VERDANT
-                </div>
+        <article class="archive-card">
 
-            </article>
-
-
-            <article class="character-card">
-
-                <div class="character-code">
-                    CASE / 004
-                </div>
-
-                <h3 class="character-name">
-                    Elias Frost
-                </h3>
-
-                <div class="character-alias">
-                    CRYO
-                </div>
-
-            </article>
-
-
-            <article class="character-card">
-
-                <div class="character-code">
-                    CASE / 005
-                </div>
-
-                <h3 class="character-name">
-                    Alistair Crowe
-                </h3>
-
-                <div class="character-alias">
-                    THE PENGUIN
-                </div>
-
-            </article>
-
-
-            <article class="character-card">
-
-                <div class="character-code">
-                    CASE / 006
-                </div>
-
-                <h3 class="character-name">
-                    Edmund Rook
-                </h3>
-
-                <div class="character-alias">
-                    THE RIDDLE
-                </div>
-
-            </article>
-
-
-            <article class="character-card">
-
-                <div class="character-code">
-                    CASE / 007
-                </div>
-
-                <h3 class="character-name">
-                    Adrian Hale
-                </h3>
-
-                <div class="character-alias">
-                    THE COIN
-                </div>
-
-            </article>
-
-
-            <article class="character-card">
-
-                <div class="character-code">
-                    CASE / 008
-                </div>
-
-                <h3 class="character-name">
-                    Mateo Varga
-                </h3>
-
-                <div class="character-alias">
-                    BANE
-                </div>
-
-            </article>
-
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         CLASSIFIED
-    ========================== -->
-
-    <section class="classified" id="classified">
-
-        <div class="section-label">
-            ARCHIVE 004 / RESTRICTED
-        </div>
-
-        <h2 class="section-title">
-            Classified
-        </h2>
-
-
-        <div class="classified-box">
-
-            <div class="classified-stamp">
-                ACCESS RESTRICTED
+            <div class="archive-number">
+                INCIDENT / 06
             </div>
 
             <h3>
@@ -1432,77 +1269,181 @@
             </h3>
 
             <p>
-                Forty-seven people officially died in the
-                Saint Dorian incident.
-
-                Records indicate that several of them
-                were transferred before the fire.
-
-                Other records indicate that some of those
-                people never existed.
+                Forty-seven official deaths.
+                An unknown number of unofficial survivors.
             </p>
 
-            <a href="#" class="access-button">
-                Open Restricted File
-            </a>
+            <span class="archive-link">
+                Restricted
+            </span>
 
+        </article>
+
+    </div>
+
+</section>
+
+
+<section class="section characters-section" id="characters">
+
+    <div class="section-header">
+
+        <div class="eyebrow">
+            Archive 003 / Identified Persons
         </div>
 
-    </section>
+        <h2 class="section-title">
+            The Players.
+        </h2>
+
+        <p class="section-description">
+            Vesper created the circumstances.
+            These people decided what to become.
+        </p>
+
+    </div>
 
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+    <div class="character-grid">
 
-    <footer>
+        <article class="character">
+            <div class="case">CASE / 001</div>
+            <h3>Lucian Ward</h3>
+            <div class="alias">The Nocturne</div>
+        </article>
 
-        <div class="footer-top">
+        <article class="character">
+            <div class="case">CASE / 002</div>
+            <h3>Jérôme Veyl</h3>
+            <div class="alias">The Laughing Man</div>
+        </article>
 
-            <div class="footer-title">
-                VESPER CITY
-            </div>
+        <article class="character">
+            <div class="case">CASE / 003</div>
+            <h3>Isolde Green</h3>
+            <div class="alias">Verdant</div>
+        </article>
 
-            <div class="footer-right">
+        <article class="character">
+            <div class="case">CASE / 004</div>
+            <h3>Elias Frost</h3>
+            <div class="alias">Cryo</div>
+        </article>
 
-                RETROFUTURISTIC NOIR<br>
-                WORLD ARCHIVE / 01<br>
-                ACCESS LEVEL: PUBLIC
+        <article class="character">
+            <div class="case">CASE / 005</div>
+            <h3>Alistair Crowe</h3>
+            <div class="alias">The Penguin</div>
+        </article>
 
-            </div>
+        <article class="character">
+            <div class="case">CASE / 006</div>
+            <h3>Edmund Rook</h3>
+            <div class="alias">The Riddle</div>
+        </article>
 
+        <article class="character">
+            <div class="case">CASE / 007</div>
+            <h3>Adrian Hale</h3>
+            <div class="alias">The Coin</div>
+        </article>
+
+        <article class="character">
+            <div class="case">CASE / 008</div>
+            <h3>Mateo Varga</h3>
+            <div class="alias">Bane</div>
+        </article>
+
+    </div>
+
+</section>
+
+
+<section class="section classified-section" id="classified">
+
+    <div class="section-header">
+
+        <div class="eyebrow">
+            Archive 004 / Restricted
         </div>
 
+        <h2 class="section-title">
+            There are things<br>
+            Vesper does not tell you.
+        </h2>
 
-        <div class="footer-bottom">
+    </div>
 
-            YESTERDAY LIVES HERE.
-            NOTHING IN VESPER IS EVER TRULY OBSOLETE.
 
+    <div class="classified-box">
+
+        <div class="stamp">
+            Access Restricted
         </div>
 
-    </footer>
+        <h3>
+            The Dorian Fire
+        </h3>
+
+        <p>
+            Official records state that forty-seven people
+            died in the Saint Dorian incident.
+
+            Internal records indicate that several patients
+            were transferred before the fire.
+
+            Other records indicate that some of those
+            patients never existed.
+        </p>
+
+        <a class="classified-button" href="#">
+            Open Restricted File
+        </a>
+
+    </div>
+
+</section>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+<footer>
 
-    <script>
+    <div class="footer-top">
 
-        const nav = document.getElementById("nav");
+        <div class="footer-name">
+            VESPER CITY
+        </div>
 
-        window.addEventListener("scroll", () => {
+        <div class="footer-meta">
+            RETROFUTURISTIC NOIR<br>
+            WORLD ARCHIVE / 001<br>
+            ACCESS LEVEL: PUBLIC
+        </div>
 
-            if (window.scrollY > 60) {
-                nav.classList.add("scrolled");
-            } else {
-                nav.classList.remove("scrolled");
-            }
+    </div>
 
-        });
+    <div class="footer-bottom">
+        YESTERDAY LIVES HERE.
+        NOTHING IN VESPER IS EVER TRULY OBSOLETE.
+    </div>
 
-    </script>
+</footer>
+
+
+<script>
+
+const nav = document.getElementById("nav");
+
+window.addEventListener("scroll", () => {
+
+    if(window.scrollY > 60){
+        nav.classList.add("scrolled");
+    }else{
+        nav.classList.remove("scrolled");
+    }
+
+});
+
+</script>
 
 </body>
 </html>
