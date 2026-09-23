@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jérôme Veyl — Vesper City</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+    --black: #080808;
+    --dark: #101010;
+    --panel: #141414;
+    --panel-light: #191919;
+    --cream: #d8d0c1;
+    --muted: #89847b;
+    --faint: #55514b;
+    --red: #74171d;
+    --red-bright: #a3262d;
+    --line: rgba(216,208,193,0.13);
+    --line-strong: rgba(216,208,193,0.22);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(
+            circle at 80% 15%,
+            rgba(116,23,29,0.10),
+            transparent 30%
+        ),
+        linear-gradient(
+            rgba(255,255,255,0.012) 1px,
+            transparent 1px
+        ),
+        var(--black);
+    background-size: auto, 100% 4px, auto;
+    color: var(--cream);
+    font-family: 'IBM Plex Mono', monospace;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.014) 50%,
+            transparent 50%
+        );
+    background-size: 100% 3px;
+    opacity: 0.3;
+    z-index: 999;
+}
+
+/* NAV */
+
+nav {
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+    padding: 22px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8,8,8,0.95);
+    position: relative;
+    z-index: 10;
+}
+
+.nav-logo {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 4px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 2px;
+    transition: 0.25s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--cream);
+}
+
+.nav-links a.active {
+    border-bottom: 1px solid var(--red-bright);
+    padding-bottom: 5px;
+}
+
+/* TOP CLASSIFICATION */
+
+.classification-bar {
+    max-width: 1400px;
+    margin: auto;
+    padding: 32px 8vw 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--muted);
+    font-size: 8px;
+    letter-spacing: 3px;
+}
+
+.classification-bar .danger {
+    color: var(--red-bright);
+}
+
+/* HERO */
+
+.hero {
+    max-width: 1400px;
+    margin: auto;
+    padding: 65px 8vw 80px;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.8fr) minmax(400px, 1.2fr);
+    min-height: 620px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.hero-image {
+    position: relative;
+    min-height: 620px;
+    overflow: hidden;
+    background: #0c0c0c;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(15%) contrast(1.1);
+}
+
+.hero-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(5,5,5,0.85),
+            transparent 45%
+        );
+}
+
+.image-stamp {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    z-index: 2;
+    color: rgba(216,208,193,0.65);
+    font-size: 8px;
+    letter-spacing: 3px;
+}
+
+.hero-content {
+    padding: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.file-code {
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+}
+
+.hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(65px, 8vw, 115px);
+    line-height: 0.8;
+    letter-spacing: -4px;
+    margin: 0;
+}
+
+.alias {
+    margin-top: 22px;
+    color: var(--red-bright);
+    font-size: 12px;
+    letter-spacing: 7px;
+}
+
+.hero-description {
+    max-width: 600px;
+    color: #aaa49a;
+    font-size: 11px;
+    line-height: 2;
+    margin: 40px 0;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.status {
+    padding: 18px 15px;
+    border-right: 1px solid var(--line);
+}
+
+.status:last-child {
+    border-right: none;
+}
+
+.status-label {
+    display: block;
+    color: var(--muted);
+    font-size: 7px;
+    letter-spacing: 2px;
+    margin-bottom: 9px;
+}
+
+.status-value {
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.status-value.red {
+    color: var(--red-bright);
+}
+
+/* MAIN */
+
+.content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 8vw 120px;
+}
+
+/* SECTION */
+
+.section {
+    border-top: 1px solid var(--line);
+    padding: 75px 0;
+}
+
+.section-heading {
+    display: grid;
+    grid-template-columns: 0.35fr 1fr;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.section-number {
+    color: var(--red-bright);
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.section-heading h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 52px;
+    margin: 0;
+    line-height: 0.9;
+}
+
+.section-body {
+    margin-left: calc(35% + 25px);
+    max-width: 700px;
+}
+
+.section-body p {
+    color: #aaa49a;
+    font-size: 11px;
+    line-height: 2.05;
+    margin: 0 0 25px;
+}
+
+.section-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* FILE TABLE */
+
+.file-table {
+    border-top: 1px solid var(--line);
+}
+
+.file-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-bottom: 1px solid var(--line);
+}
+
+.file-label {
+    padding: 18px 0;
+    color: var(--muted);
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+.file-value {
+    padding: 18px 0;
+    color: var(--cream);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* INCIDENT */
+
+.incident {
+    border: 1px solid var(--line);
+    background: rgba(20,20,20,0.65);
+    padding: 40px;
+    position: relative;
+}
+
+.incident::before {
+    content: "INCIDENT REPORT";
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    color: var(--red-bright);
+    font-size: 7px;
+    letter-spacing: 3px;
+}
+
+.incident h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 400;
+    margin: 15px 0 25px;
+}
+
+.incident p {
+    color: #aaa49a;
+    font-size: 11px;
+    line-height: 2;
+    max-width: 800px;
+}
+
+/* ARCHIVE IMAGE */
+
+.archive-image {
+    margin-top: 45px;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+}
+
+.archive-image img {
+    width: 100%;
+    display: block;
+    filter: contrast(1.05);
+}
+
+.archive-caption {
+    padding: 14px 18px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+/* RELATIONSHIPS */
+
+.relationships {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+}
+
+.relationship {
+    background: var(--panel);
+    padding: 30px;
+    min-height: 190px;
+}
+
+.relationship-label {
+    color: var(--red-bright);
+    font-size: 8px;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+}
+
+.relationship h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 32px;
+    margin: 0 0 12px;
+}
+
+.relationship p {
+    color: var(--muted);
+    font-size: 9px;
+    line-height: 1.9;
+    margin: 0;
+}
+
+/* REDACTED */
+
+.redacted {
+    color: #050505;
+    background: #050505;
+    padding: 0 5px;
+    user-select: none;
+}
+
+.classified {
+    border-left: 2px solid var(--red);
+    padding: 25px 30px;
+    background: rgba(116,23,29,0.035);
+}
+
+.classified-label {
+    color: var(--red-bright);
+    font-size: 8px;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.classified p {
+    margin: 0;
+}
+
+/* FOOTER */
+
+footer {
+    border-top: 1px solid var(--line);
+    padding: 30px 8vw;
+    display: flex;
+    justify-content: space-between;
+    color: rgba(216,208,193,0.35);
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    nav {
+        padding: 18px 5vw;
+    }
+
+    .nav-links {
+        gap: 13px;
+    }
+
+    .nav-links a {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .classification-bar {
+        padding: 25px 6vw 0;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .hero {
+        padding: 45px 6vw 60px;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-image {
+        min-height: 500px;
+        height: 500px;
+    }
+
+    .hero-content {
+        padding: 45px 30px;
+    }
+
+    .hero-content h1 {
+        font-size: 70px;
+    }
+
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .status {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .status:last-child {
+        border-bottom: none;
+    }
+
+    .content {
+        padding: 0 6vw 80px;
+    }
+
+    .section {
+        padding: 55px 0;
+    }
+
+    .section-heading {
+        display: block;
+        margin-bottom: 35px;
+    }
+
+    .section-number {
+        margin-bottom: 15px;
+    }
+
+    .section-heading h2 {
+        font-size: 45px;
+    }
+
+    .section-body {
+        margin-left: 0;
+    }
+
+    .file-row {
+        grid-template-columns: 1fr;
+    }
+
+    .file-label {
+        padding-bottom: 5px;
+    }
+
+    .file-value {
+        padding-top: 5px;
+    }
+
+    .relationships {
+        grid-template-columns: 1fr;
+    }
+
+    .incident {
+        padding: 30px 25px;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">VESPER CITY</a>
+
+    <div class="nav-links">
+        <a href="city.html">CITY</a>
+        <a href="world.html">WORLD</a>
+        <a href="characters.html" class="active">CHARACTERS</a>
+        <a href="classified.html">CLASSIFIED</a>
+    </div>
+</nav>
+
+
+<div class="classification-bar">
+    <span>BLACKTHORN INSTITUTE / RESTRICTED PERSONNEL FILE</span>
+    <span class="danger">ACCESS LEVEL: RESTRICTED</span>
+</div>
+
+
+<header class="hero">
+
+    <div class="hero-grid">
+
+        <div class="hero-image">
+
+            <img
+                src="jerome-archive.png"
+                alt="Blackthorn Institute archive material concerning Jérôme Veyl"
+            >
+
+            <div class="image-stamp">
+                ARCHIVE MATERIAL / SOURCE PARTIALLY VERIFIED
+            </div>
+
+        </div>
+
+
+        <div class="hero-content">
+
+            <div class="file-code">
+                FILE 001 / VEYL, JÉRÔME
+            </div>
+
+            <h1>Jérôme<br>Veyl</h1>
+
+            <div class="alias">VOILE</div>
+
+            <p class="hero-description">
+                A young criminal offender whose documented history begins
+                abruptly at nineteen. No verified childhood. No confirmed
+                family. No explanation for the years that came before.
+
+                <br><br>
+
+                What Vesper does have is a name, a collection of crimes,
+                and a man who appears entirely comfortable with the fact
+                that nobody can agree on where he came from.
+            </p>
+
+
+            <div class="status-grid">
+
+                <div class="status">
+                    <span class="status-label">STATUS</span>
+                    <span class="status-value red">INCARCERATED</span>
+                </div>
+
+                <div class="status">
+                    <span class="status-label">FACILITY</span>
+                    <span class="status-value">BLACKTHORN</span>
+                </div>
+
+                <div class="status">
+                    <span class="status-label">RISK</span>
+                    <span class="status-value red">HIGH</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+    <!-- IDENTITY -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                01 / IDENTITY
+            </div>
+
+            <h2>The man<br>behind the name.</h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+            <p>
+                There is no verifiable record of Jérôme Veyl before the age
+                of nineteen.
+            </p>
+
+            <p>
+                No birth certificate. No school history. No documented
+                family. No financial records. No childhood photographs.
+                No genetic family match has established a connection to
+                anyone currently known to Vesper authorities.
+            </p>
+
+            <p>
+                The name "Veyl" appears without an identifiable origin.
+                The alias "Voile" emerged later, first in media reports
+                describing the masked or obscured figure associated with
+                a series of increasingly theatrical crimes. Jérôme has
+                never publicly confirmed where the name came from.
+            </p>
+
+            <div class="file-table">
+
+                <div class="file-row">
+                    <div class="file-label">LEGAL NAME</div>
+                    <div class="file-value">JÉRÔME VEYL</div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">KNOWN ALIAS</div>
+                    <div class="file-value">VOILE</div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">AGE</div>
+                    <div class="file-value">MID-TWENTIES</div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">DATE OF BIRTH</div>
+                    <div class="file-value">UNVERIFIED</div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">FAMILY</div>
+                    <div class="file-value">NO VERIFIED RECORD</div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">ORIGIN</div>
+                    <div class="file-value">UNKNOWN</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                02 / HISTORY
+            </div>
+
+            <h2>A history<br>that begins at nineteen.</h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+            <p>
+                The earliest confirmed evidence connected to Jérôme Veyl
+                appears when he is approximately nineteen years old.
+                Even then, the available records are fragmented.
+            </p>
+
+            <p>
+                Small robberies, fires, sabotage and unauthorized
+                intrusions were attributed to an unidentified young man
+                during the following years. Several investigations were
+                abandoned for lack of evidence. Others were never formally
+                connected.
+            </p>
+
+            <p>
+                What changed was the scale.
+            </p>
+
+            <p>
+                Bank robberies, attacks on police facilities, industrial
+                raids and public acts of destruction eventually made
+                "Voile" impossible for Vesper authorities to treat as a
+                collection of unrelated incidents.
+            </p>
+
+            <div class="classified">
+
+                <div class="classified-label">
+                    ARCHIVAL NOTE
+                </div>
+
+                <p>
+                    An incomplete clinical record recovered from material
+                    associated with the former Saint Dorian complex
+                    describes a young patient whose behavioral profile
+                    bears similarities to Veyl.
+
+                    <br><br>
+
+                    The patient's identity remains
+                    <span class="redacted">████████████████</span>.
+
+                    No evidence currently establishes that the patient
+                    was Jérôme Veyl.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CRIMINAL RECORD -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                03 / RECORD
+            </div>
+
+            <h2>Criminal<br>activity.</h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+            <p>
+                Veyl's confirmed criminal history includes violent attacks,
+                large-scale property destruction, kidnapping, organized
+                sabotage and attacks against public institutions.
+            </p>
+
+            <div class="file-table">
+
+                <div class="file-row">
+                    <div class="file-label">BANK ROBBERIES</div>
+                    <div class="file-value">
+                        MULTIPLE / CONFIRMED
+                    </div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">VCPD ATTACK</div>
+                    <div class="file-value">
+                        BOMBING / CONFIRMED
+                    </div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">KIDNAPPING</div>
+                    <div class="file-value">
+                        LUCIAN WARD / CONFIRMED
+                    </div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">BLACK DISTRICT</div>
+                    <div class="file-value">
+                        INDUSTRIAL RAIDS / CONFIRMED
+                    </div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">COURTHOUSE ATTACK</div>
+                    <div class="file-value">
+                        MASS CASUALTY EVENT / CONFIRMED
+                    </div>
+                </div>
+
+                <div class="file-row">
+                    <div class="file-label">OTHER INCIDENTS</div>
+                    <div class="file-value">
+                        RECORD INCOMPLETE
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- UNIVERSITY INCIDENT -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                04 / INCIDENT
+            </div>
+
+            <h2>The University<br>Incident.</h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+            <div class="incident">
+
+                <h3>Vesper University</h3>
+
+                <p>
+                    During a national congress hosted at Vesper University,
+                    Jérôme Veyl attempted to seize control of the campus.
+                    The rector was taken hostage and hundreds of students
+                    were placed under threat.
+                </p>
+
+                <p>
+                    Veyl's stated objective was to force the Nocturne to
+                    reveal his identity publicly. If the demand was not
+                    met, students were to be killed one by one during a
+                    live broadcast.
+                </p>
+
+                <p>
+                    The operation was interrupted before the takeover could
+                    be completed. Veyl was captured by the Nocturne with
+                    assistance from VCPD officer Hector and transferred to
+                    Blackthorn Institute.
+                </p>
+
+                <p>
+                    The official report considers the incident a failed
+                    hostage operation.
+                </p>
+
+                <p>
+                    Unofficially, The Veil has never completely accepted
+                    that explanation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ARCHIVE -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                05 / ARCHIVE
+            </div>
+
+            <h2>Fragments of<br>the record.</h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+            <p>
+                Much of the surviving material concerning Veyl is
+                contradictory, incomplete or impossible to authenticate.
+                Photographs have appeared without identifiable sources.
+                Documents have been altered. Some records disappeared
+                entirely.
+            </p>
+
+            <div class="archive-image">
+
+                <img
+                    src="jerome-archive.png"
+                    alt="Recovered archive material concerning Jérôme Veyl"
+                >
+
+                <div class="archive-caption">
+                    RECOVERED MATERIAL / AUTHENTICITY PARTIALLY VERIFIED
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RELATIONSHIPS -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                06 / ASSOCIATIONS
+            </div>
+
+            <h2>The people<br>around him.</h2>
+
+        </div>
+
+
+        <div class="relationships">
+
+            <article class="relationship">
+
+                <div class="relationship-label">
+                    ADVERSARY
+                </div>
+
+                <h3>Nocturne</h3>
+
+                <p>
+                    Lucian Ward. Their encounters have developed into a
+                    prolonged conflict centered on identity, control and
+                    moral boundaries.
+                </p>
+
+            </article>
+
+
+            <article class="relationship">
+
+                <div class="relationship-label">
+                    VCPD
+                </div>
+
+                <h3>Hector</h3>
+
+                <p>
+                    A practical officer who understands Vesper's
+                    institutional corruption without allowing it to
+                    completely define his work.
+                </p>
+
+            </article>
+
+
+            <article class="relationship">
+
+                <div class="relationship-label">
+                    BLACKTHORN
+                </div>
+
+                <h3>Dr. Julian Harrow</h3>
+
+                <p>
+                    Psychiatrist and researcher associated with Blackthorn.
+                    Their relationship is characterized by mutual
+                    observation and professional suspicion.
+                </p>
+
+            </article>
+
+
+            <article class="relationship">
+
+                <div class="relationship-label">
+                    CLINICAL FILE
+                </div>
+
+                <h3>[REDACTED]</h3>
+
+                <p>
+                    Assigned clinician. Vesper University graduate.
+                    Further information restricted under clinical
+                    confidentiality protocols.
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- BLACKTHORN -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                07 / BLACKTHORN
+            </div>
+
+            <h2>The patient<br>inside the institution.</h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+            <p>
+                Jérôme Veyl is currently held at Blackthorn Institute, a
+                maximum-security psychiatric facility located in The Veil.
+            </p>
+
+            <p>
+                His movements are restricted and his interactions are
+                monitored. He is considered a high-risk offender and is
+                subject to enhanced security procedures.
+            </p>
+
+            <p>
+                Despite the restrictions, Veyl has become familiar with
+                the institution's routines, staff and security procedures.
+                He appears particularly attentive to changes in behavior
+                among the people who work around him.
+            </p>
+
+            <p>
+                Whether that attention represents deliberate study,
+                ordinary curiosity or something else remains
+                undetermined.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL NOTE -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-number">
+                08 / FINAL NOTE
+            </div>
+
+            <h2>What remains<br>unknown.</h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+            <p>
+                There is still no verified explanation for the years before
+                Jérôme Veyl appeared in Vesper's records.
+            </p>
+
+            <p>
+                The Saint Dorian connection remains unproven.
+                His original identity remains unconfirmed.
+                His motives remain difficult to reduce to a single
+                explanation.
+            </p>
+
+            <p>
+                Blackthorn has classified the matter as unresolved.
+            </p>
+
+            <p>
+                The file remains open.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <span>VESPER CITY / BLACKTHORN INSTITUTE</span>
+    <span>FILE 001 — VEYL, JÉRÔME</span>
+</footer>
+
+</body>
+</html>
