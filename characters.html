@@ -1,587 +1,1015 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Characters — Vesper Archives</title><style>
+:root{
+    --black:#060708;
+    --black-2:#0a0c0d;
+    --black-3:#101214;
 
-<title>Characters — Vesper City</title>
+    --cream:#ddd6c6;
+    --cream-soft:#aaa395;
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+    --amber:#b18a51;
+    --amber-soft:#d0ad72;
 
-:root {
-    --black: #090909;
-    --dark: #101010;
-    --panel: #151515;
-    --cream: #d8d0c1;
-    --muted: #8c877d;
-    --red: #7e171d;
-    --red-bright: #a3262d;
-    --line: rgba(216, 208, 193, 0.13);
+    --red:#6d242d;
+    --red-soft:#91343d;
+
+    --green:#778571;
+
+    --line:rgba(221,214,198,.14);
+    --line-bright:rgba(221,214,198,.24);
 }
 
-* {
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    margin: 0;
-    background:
-        radial-gradient(circle at 75% 20%, rgba(126, 23, 29, 0.09), transparent 30%),
-        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-        var(--black);
-    background-size: auto, 100% 4px, auto;
-    color: var(--cream);
-    font-family: 'IBM Plex Mono', monospace;
-    min-height: 100vh;
+body{
+    background:var(--black);
+    color:var(--cream);
+    font-family:Georgia,"Times New Roman",serif;
+    overflow-x:hidden;
 }
 
-/* subtle CRT effect */
+/* ==============================
+   ATMOSPHERE
+================================ */
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+
     background:
         linear-gradient(
-            rgba(255,255,255,0.015) 50%,
-            transparent 50%
+            rgba(255,255,255,.018) 50%,
+            rgba(0,0,0,.025) 50%
         );
-    background-size: 100% 3px;
-    opacity: 0.25;
-    z-index: 999;
+
+    background-size:100% 4px;
+    opacity:.18;
 }
 
-/* NAVIGATION */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9998;
 
-nav {
-    width: 100%;
-    border-bottom: 1px solid var(--line);
-    padding: 22px 6vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(9,9,9,0.94);
-    position: relative;
-    z-index: 10;
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 45%,
+            rgba(0,0,0,.64) 100%
+        );
 }
 
-.nav-logo {
-    color: var(--cream);
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 4px;
+/* ==============================
+   NAV
+================================ */
+
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+
+    padding:24px 5vw;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    transition:.35s ease;
 }
 
-.nav-links {
-    display: flex;
-    gap: 30px;
+.nav.scrolled{
+    background:rgba(6,7,8,.91);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(12px);
 }
 
-.nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 10px;
-    letter-spacing: 2px;
-    transition: 0.25s;
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    color:var(--cream);
+
+    font-family:"Courier New",monospace;
+    font-size:11px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-    color: var(--cream);
+.logo-mark{
+    width:30px;
+    height:30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid var(--amber);
+
+    color:var(--amber-soft);
+
+    font-family:Georgia,serif;
+    font-size:13px;
 }
 
-.nav-links a.active {
-    border-bottom: 1px solid var(--red-bright);
-    padding-bottom: 5px;
+.nav-links{
+    display:flex;
+    gap:30px;
 }
 
-/* HEADER */
+.nav-links a{
+    position:relative;
 
-.page-header {
-    padding: 100px 8vw 70px;
-    max-width: 1400px;
-    margin: auto;
-    position: relative;
+    color:#908b81;
+
+    font-family:"Courier New",monospace;
+    font-size:9px;
+    letter-spacing:.19em;
+    text-transform:uppercase;
+
+    transition:.3s ease;
 }
 
-.classification {
-    color: var(--red-bright);
-    font-size: 10px;
-    letter-spacing: 4px;
-    margin-bottom: 18px;
+.nav-links a::after{
+    content:"";
+
+    position:absolute;
+    left:0;
+    bottom:-8px;
+
+    width:0;
+    height:1px;
+
+    background:var(--amber);
+
+    transition:.3s ease;
 }
 
-.page-header h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(60px, 9vw, 125px);
-    font-weight: 400;
-    line-height: 0.85;
-    margin: 0 0 35px;
-    letter-spacing: -3px;
+.nav-links a:hover{
+    color:var(--cream);
 }
 
-.page-header p {
-    max-width: 650px;
-    color: var(--muted);
-    font-size: 11px;
-    line-height: 2;
+.nav-links a:hover::after{
+    width:100%;
 }
 
-.header-line {
-    width: 100%;
-    height: 1px;
-    background: var(--line);
-    margin-top: 60px;
-}
+/* ==============================
+   HERO
+================================ */
 
-/* CHARACTER SECTION */
+.hero{
+    position:relative;
+    min-height:100vh;
 
-.characters {
-    max-width: 1400px;
-    margin: auto;
-    padding: 20px 8vw 120px;
-}
+    display:flex;
+    align-items:flex-end;
 
-.character-entry {
-    display: grid;
-    grid-template-columns: minmax(300px, 0.9fr) minmax(350px, 1.1fr);
-    min-height: 650px;
-    border: 1px solid var(--line);
-    background: rgba(18,18,18,0.7);
-    position: relative;
-    overflow: hidden;
-}
+    overflow:hidden;
 
-/* IMAGE */
-
-.character-image {
-    position: relative;
-    min-height: 650px;
-    overflow: hidden;
-    background: #0c0c0c;
-}
-
-.character-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    filter: grayscale(20%) contrast(1.08);
-    transition: transform 0.7s ease, filter 0.7s ease;
-}
-
-.character-entry:hover .character-image img {
-    transform: scale(1.025);
-    filter: grayscale(5%) contrast(1.1);
-}
-
-.image-overlay {
-    position: absolute;
-    inset: 0;
     background:
         linear-gradient(
             to top,
-            rgba(5,5,5,0.8),
-            transparent 40%
+            rgba(4,5,6,1) 0%,
+            rgba(4,5,6,.73) 22%,
+            rgba(4,5,6,.16) 65%,
+            rgba(4,5,6,.35) 100%
         ),
         linear-gradient(
-            to right,
-            rgba(5,5,5,0.15),
-            transparent
+            90deg,
+            rgba(3,4,5,.82),
+            rgba(3,4,5,.15)
+        ),
+        url("vesper-city.png");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at 68% 32%,
+            rgba(177,138,81,.08),
+            transparent 28%
         );
-    pointer-events: none;
 }
 
-.image-label {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: rgba(216,208,193,0.65);
+.hero::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.012),
+            transparent 30%
+        );
 }
 
-/* INFO */
+.hero-content{
+    position:relative;
+    z-index:3;
 
-.character-info {
-    padding: 65px 65px 55px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
+    width:100%;
+
+    padding:
+        0
+        7vw
+        9vh;
 }
 
-.file-number {
-    color: var(--muted);
-    font-size: 9px;
-    letter-spacing: 3px;
-    margin-bottom: 25px;
+.archive-line{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    margin-bottom:22px;
+
+    color:var(--amber-soft);
+
+    font-family:"Courier New",monospace;
+    font-size:9px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
 }
 
-.character-info h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(50px, 6vw, 82px);
-    font-weight: 400;
-    line-height: 0.85;
-    margin: 0;
-    letter-spacing: -2px;
+.archive-line::before{
+    content:"";
+
+    width:30px;
+    height:1px;
+
+    background:var(--amber);
 }
 
-.alias {
-    color: var(--red-bright);
-    font-size: 12px;
-    letter-spacing: 5px;
-    margin-top: 15px;
+.hero-title{
+    font-size:clamp(5rem,13vw,11rem);
+
+    font-weight:normal;
+
+    line-height:.78;
+
+    letter-spacing:.04em;
+
+    color:#e4ddce;
+
+    text-shadow:
+        0 5px 40px rgba(0,0,0,.8);
 }
 
-.character-description {
-    color: #aaa49a;
-    font-size: 11px;
-    line-height: 2;
-    max-width: 560px;
-    margin: 38px 0;
+.hero-subtitle{
+    margin-top:34px;
+
+    max-width:620px;
+
+    color:#b8b0a1;
+
+    font-size:clamp(1.05rem,2vw,1.4rem);
+
+    font-style:italic;
+
+    line-height:1.7;
 }
 
-.metadata {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 35px;
+.hero-data{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:12px 28px;
+
+    margin-top:34px;
+
+    color:#777169;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.17em;
+    text-transform:uppercase;
 }
 
-.meta-item {
-    padding: 18px 0;
+.hero-data span{
+    position:relative;
 }
 
-.meta-item:nth-child(odd) {
-    border-right: 1px solid var(--line);
-    padding-right: 20px;
+.hero-data span:not(:last-child)::after{
+    content:"";
+
+    position:absolute;
+
+    right:-16px;
+    top:50%;
+
+    width:3px;
+    height:3px;
+
+    border-radius:50%;
+
+    background:var(--amber);
 }
 
-.meta-item:nth-child(even) {
-    padding-left: 20px;
+.scroll-note{
+    position:absolute;
+
+    right:7vw;
+    bottom:9vh;
+
+    writing-mode:vertical-rl;
+
+    color:#756f66;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.23em;
+    text-transform:uppercase;
+
+    animation:pulse 2.8s infinite ease-in-out;
 }
 
-.meta-label {
-    display: block;
-    color: var(--muted);
-    font-size: 8px;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
+@keyframes pulse{
+    0%,100%{opacity:.35}
+    50%{opacity:1}
 }
 
-.meta-value {
-    font-size: 10px;
-    letter-spacing: 1px;
-    color: var(--cream);
+/* ==============================
+   GENERAL SECTIONS
+================================ */
+
+.section{
+    position:relative;
+
+    padding:135px 7vw;
 }
 
-.meta-value.red {
-    color: var(--red-bright);
+.section-header{
+    max-width:760px;
 }
 
-/* BUTTON */
+.eyebrow{
+    margin-bottom:16px;
 
-.open-file {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    min-width: 170px;
-    padding: 15px 25px;
-    border: 1px solid rgba(216,208,193,0.3);
-    color: var(--cream);
-    text-decoration: none;
-    font-size: 9px;
-    letter-spacing: 3px;
-    transition: all 0.3s ease;
+    color:var(--amber);
+
+    font-family:"Courier New",monospace;
+    font-size:9px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
 }
 
-.open-file:hover {
-    background: var(--red);
-    border-color: var(--red);
-    color: white;
+.section-title{
+    color:#d8d1c2;
+
+    font-size:clamp(2.7rem,5vw,5.5rem);
+
+    font-weight:normal;
+
+    line-height:.95;
 }
 
-/* CORNER DETAILS */
+.section-description{
+    margin-top:27px;
 
-.corner {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-color: rgba(216,208,193,0.25);
-    pointer-events: none;
+    color:#8f897f;
+
+    font-size:1rem;
+
+    line-height:1.95;
 }
 
-.corner.top-left {
-    top: 15px;
-    left: 15px;
-    border-top: 1px solid;
-    border-left: 1px solid;
+/* ==============================
+   INTRO / CITY
+================================ */
+
+.city-section{
+    background:
+        linear-gradient(
+            to bottom,
+            #050607,
+            #0b0d0f
+        );
 }
 
-.corner.bottom-right {
-    bottom: 15px;
-    right: 15px;
-    border-bottom: 1px solid;
-    border-right: 1px solid;
+.city-layout{
+    margin-top:80px;
+
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+
+    gap:70px;
 }
 
-/* COMING SOON */
-
-.archive-note {
-    margin-top: 70px;
-    border-top: 1px solid var(--line);
-    padding-top: 25px;
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
+.editorial{
+    padding-right:30px;
 }
 
-.archive-note span {
-    color: var(--muted);
-    font-size: 9px;
-    letter-spacing: 2px;
+.editorial p{
+    margin-bottom:25px;
+
+    color:#979187;
+
+    font-size:1rem;
+
+    line-height:1.95;
 }
 
-.archive-note span:last-child {
-    color: rgba(216,208,193,0.35);
+.editorial .lead{
+    color:#c3bcad;
+
+    font-size:1.25rem;
+
+    line-height:1.8;
 }
 
-/* FOOTER */
+.quote{
+    margin-top:38px;
+    padding:25px 0 25px 24px;
 
-footer {
-    border-top: 1px solid var(--line);
-    padding: 30px 8vw;
-    display: flex;
-    justify-content: space-between;
-    color: rgba(216,208,193,0.35);
-    font-size: 8px;
-    letter-spacing: 2px;
+    border-left:1px solid var(--red-soft);
+
+    color:#bcb3a3;
+
+    font-size:1.35rem;
+
+    line-height:1.6;
+
+    font-style:italic;
 }
 
-/* MOBILE */
+/* ==============================
+   STATUS PANEL
+================================ */
 
-@media (max-width: 800px) {
+.status-panel{
+    align-self:start;
 
-    nav {
-        padding: 18px 5vw;
+    padding:27px;
+
+    border:1px solid var(--line);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.025),
+            rgba(0,0,0,.12)
+        );
+
+    box-shadow:
+        inset 0 0 45px rgba(0,0,0,.22);
+}
+
+.status-header{
+    display:flex;
+    justify-content:space-between;
+
+    padding-bottom:17px;
+
+    border-bottom:1px solid var(--line);
+
+    color:#7d786f;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+}
+
+.status-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+
+    padding:17px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.status-row span:first-child{
+    color:#66635d;
+}
+
+.status-row span:last-child{
+    color:#a29b8e;
+    text-align:right;
+}
+
+.status-active{
+    color:var(--green)!important;
+}
+
+.status-alert{
+    color:#a15b60!important;
+}
+
+/* ==============================
+   ARCHIVES
+================================ */
+
+.archive-section{
+    background:#0a0c0d;
+}
+
+.archive-grid{
+    margin-top:70px;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+}
+
+.archive-card{
+    min-height:285px;
+
+    padding:31px;
+
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.023),
+            transparent 60%
+        );
+
+    transition:.35s ease;
+}
+
+.archive-card:hover{
+    background:
+        linear-gradient(
+            145deg,
+            rgba(177,138,81,.07),
+            transparent 60%
+        );
+
+    transform:translateY(-4px);
+}
+
+.archive-number{
+    color:#625e57;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+}
+
+.archive-card h3{
+    margin-top:70px;
+
+    color:#d4cdbd;
+
+    font-size:1.55rem;
+
+    font-weight:normal;
+}
+
+.archive-card p{
+    margin-top:15px;
+
+    color:#79746c;
+
+    font-size:.9rem;
+
+    line-height:1.75;
+}
+
+.archive-link{
+    display:inline-block;
+
+    margin-top:24px;
+
+    color:var(--amber-soft);
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
+
+/* ==============================
+   CHARACTERS
+================================ */
+
+.characters-section{
+    background:
+        radial-gradient(
+            circle at 15% 45%,
+            rgba(109,36,45,.09),
+            transparent 28%
+        ),
+        #080a0b;
+}
+
+.character-grid{
+    margin-top:70px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.character{
+    position:relative;
+
+    min-height:240px;
+
+    padding:28px;
+
+    background:#0d0f10;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+}
+
+.character:hover{
+    background:#131617;
+}
+
+.character::after{
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    right:-45px;
+    bottom:-55px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(177,138,81,.10),
+            transparent 70%
+        );
+}
+
+.case{
+    color:#5e5a53;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+}
+
+.character h3{
+    margin-top:56px;
+
+    color:#d7d0c0;
+
+    font-size:1.45rem;
+
+    font-weight:normal;
+}
+
+.character .alias{
+    margin-top:8px;
+
+    color:var(--amber);
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
+
+/* ==============================
+   CLASSIFIED
+================================ */
+
+.classified-section{
+    background:
+        linear-gradient(
+            135deg,
+            #120a0d,
+            #08090a
+        );
+
+    border-top:1px solid rgba(145,52,61,.18);
+}
+
+.classified-box{
+    position:relative;
+
+    margin-top:70px;
+
+    padding:52px;
+
+    border:1px solid rgba(145,52,61,.4);
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,.01),
+            rgba(255,255,255,.01) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+}
+
+.stamp{
+    position:absolute;
+
+    top:28px;
+    right:28px;
+
+    padding:9px 13px;
+
+    border:1px solid var(--red-soft);
+
+    color:#a14d57;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+
+    transform:rotate(2deg);
+}
+
+.classified-box h3{
+    color:#d8cfbd;
+
+    font-size:2rem;
+
+    font-weight:normal;
+}
+
+.classified-box p{
+    max-width:700px;
+
+    margin-top:20px;
+
+    color:#817a72;
+
+    line-height:1.9;
+}
+
+.classified-button{
+    display:inline-block;
+
+    margin-top:34px;
+
+    padding:13px 20px;
+
+    border:1px solid var(--red-soft);
+
+    color:#bd858b;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+
+    transition:.3s ease;
+}
+
+.classified-button:hover{
+    background:var(--red);
+    color:#e4cbc6;
+}
+
+/* ==============================
+   FOOTER
+================================ */
+
+footer{
+    padding:55px 7vw 70px;
+
+    background:#050606;
+
+    border-top:1px solid var(--line);
+}
+
+.footer-top{
+    display:flex;
+    justify-content:space-between;
+    gap:35px;
+}
+
+.footer-name{
+    color:#cfc8b9;
+
+    font-size:1.35rem;
+
+    letter-spacing:.12em;
+}
+
+.footer-meta{
+    color:#5d5952;
+
+    text-align:right;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    line-height:1.9;
+    letter-spacing:.12em;
+}
+
+.footer-bottom{
+    margin-top:45px;
+    padding-top:20px;
+
+    border-top:1px solid var(--line);
+
+    color:#47443f;
+
+    font-family:"Courier New",monospace;
+    font-size:8px;
+    letter-spacing:.16em;
+}
+
+/* ==============================
+   MOBILE
+================================ */
+
+@media(max-width:900px){
+
+    .nav{
+        padding:18px 5vw;
     }
 
-    .nav-links {
-        gap: 13px;
+    .nav-links{
+        display:none;
     }
 
-    .nav-links a {
-        font-size: 8px;
-        letter-spacing: 1px;
+    .hero{
+        min-height:95vh;
+
+        background-position:61% center;
     }
 
-    .page-header {
-        padding: 70px 6vw 50px;
+    .hero-content{
+        padding:
+            0
+            6vw
+            8vh;
     }
 
-    .page-header h1 {
-        font-size: 65px;
+    .hero-title{
+        font-size:clamp(4.2rem,18vw,7rem);
     }
 
-    .characters {
-        padding: 20px 6vw 80px;
+    .scroll-note{
+        display:none;
     }
 
-    .character-entry {
-        grid-template-columns: 1fr;
+    .section{
+        padding:95px 6vw;
     }
 
-    .character-image {
-        min-height: 470px;
-        height: 470px;
+    .city-layout{
+        grid-template-columns:1fr;
+        gap:50px;
     }
 
-    .character-info {
-        padding: 45px 30px;
+    .editorial{
+        padding-right:0;
     }
 
-    .character-info h2 {
-        font-size: 60px;
+    .archive-grid{
+        grid-template-columns:1fr;
     }
 
-    .metadata {
-        grid-template-columns: 1fr;
+    .character-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .meta-item:nth-child(odd) {
-        border-right: none;
-        border-bottom: 1px solid var(--line);
-        padding-right: 0;
+    .classified-box{
+        padding:35px 24px;
     }
 
-    .meta-item:nth-child(even) {
-        padding-left: 0;
+    .stamp{
+        position:static;
+        display:inline-block;
+        margin-bottom:25px;
     }
 
-    .archive-note {
-        flex-direction: column;
-        gap: 10px;
+    .footer-top{
+        flex-direction:column;
     }
 
-    footer {
-        flex-direction: column;
-        gap: 12px;
+    .footer-meta{
+        text-align:left;
     }
 }
-</style>
-</head>
 
-<body>
+@media(max-width:540px){
 
-<nav>
-    <a href="index.html" class="nav-logo">VESPER CITY</a>
+    .logo{
+        font-size:9px;
+    }
 
-    <div class="nav-links">
-        <a href="city.html">CITY</a>
-        <a href="world.html">WORLD</a>
-        <a href="characters.html" class="active">CHARACTERS</a>
-        <a href="classified.html">CLASSIFIED</a>
-    </div>
-</nav>
+    .logo-mark{
+        width:26px;
+        height:26px;
+    }
 
+    .hero-data{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+    }
 
-<header class="page-header">
+    .hero-data span:not(:last-child)::after{
+        display:none;
+    }
 
-    <div class="classification">
-        VESPER CITY / PERSONNEL ARCHIVE
-    </div>
+    .character-grid{
+        grid-template-columns:1fr;
+    }
 
-    <h1>Characters</h1>
+    .character{
+        min-height:205px;
+    }
 
-    <p>
-        The people who shape Vesper City rarely appear in the official
-        records exactly as they are. Some are known by names. Others by
-        aliases, rumors, photographs, crimes or stories that refuse to die.
-        What follows is an incomplete archive.
-    </p>
+    .archive-card{
+        min-height:235px;
+    }
+}
 
-    <div class="header-line"></div>
-
-</header>
-
-
-<main class="characters">
-
-    <article class="character-entry">
-
-        <div class="character-image">
-
-          <img
-    src="jerome-veyl.png"
-    alt="Jérôme Veyl — official Blackthorn Institute photograph"
->
-
-            <div class="image-overlay"></div>
-
-            <div class="image-label">
-                BLACKTHORN INSTITUTE / OFFICIAL RECORD
-            </div>
-
-        </div>
-
-
-        <div class="character-info">
-
-            <div class="corner top-left"></div>
-            <div class="corner bottom-right"></div>
-
-            <div class="file-number">
-                FILE 001 / VEYL, JÉRÔME
-            </div>
-
-            <h2>Jérôme<br>Veyl</h2>
-
-            <div class="alias">
-                VOILE
-            </div>
-
-            <p class="character-description">
-                There is no verifiable record of Jérôme Veyl before the age
-                of nineteen. No childhood. No family. No school records.
-                Nothing that explains where he came from.
-
-                <br><br>
-
-                What exists instead is a growing trail of crimes, fires,
-                disappearances and public incidents that eventually earned
-                him a name of his own. Vesper City calls him Voile.
-                Blackthorn calls him a high-risk offender.
-
-                <br><br>
-
-                The distinction has never seemed particularly important
-                to Jérôme.
-            </p>
-
-
-            <div class="metadata">
-
-                <div class="meta-item">
-                    <span class="meta-label">STATUS</span>
-                    <span class="meta-value red">INCARCERATED</span>
-                </div>
-
-                <div class="meta-item">
-                    <span class="meta-label">LOCATION</span>
-                    <span class="meta-value">BLACKTHORN INSTITUTE</span>
-                </div>
-
-                <div class="meta-item">
-                    <span class="meta-label">CLASSIFICATION</span>
-                    <span class="meta-value red">HIGH RISK</span>
-                </div>
-
-                <div class="meta-item">
-                    <span class="meta-label">IDENTITY</span>
-                    <span class="meta-value">UNVERIFIED</span>
-                </div>
-
-            </div>
-
-
-            <a href="jerome.html" class="open-file">
-                OPEN FILE →
-            </a>
-
-        </div>
-
-    </article>
-
-
-    <div class="archive-note">
-
-        <span>
-            ARCHIVE STATUS: PARTIAL
-        </span>
-
-        <span>
-            ADDITIONAL FILES RESTRICTED
-        </span>
-
-    </div>
-
-</main>
-
-
-<footer>
-    <span>VESPER CITY</span>
-    <span>ALL RECORDS ARE SUBJECT TO REVIEW</span>
-</footer>
-
-</body>
-</html>
+.character-grid a.character{text-decoration:none;color:inherit;display:block}
+.character-grid a.character h3{color:#d7d0c0}
+</style></head><body>
+<nav class="nav" id="nav"><a href="index.html" class="logo"><span class="logo-mark">V</span><span>Vesper Archives</span></a><div class="nav-links"><a href="index.html">Home</a><a href="city.html">The City</a><a href="world.html">The World</a><a href="characters.html">Characters</a><a href="classified.html">Classified</a></div></nav>
+<header class="hero"><div class="hero-content"><div class="archive-line">Archive 003 / Identified Persons</div><h1 class="hero-title">The Players.</h1><p class="hero-subtitle">Vesper created the circumstances. These people decided what to become.</p></div></header>
+<section class="section characters-section"><div class="section-header"><div class="eyebrow">Vesper City / Character Archive</div><h2 class="section-title">Identified<br>Persons.</h2><p class="section-description">Personnel records, aliases and known identities. Several files remain incomplete.</p></div><div class="character-grid">
+        <a href="lucian.html" class="character">
+            <div class="case">CASE / 001</div>
+            <h3>Lucian Ward</h3>
+            <div class="alias">The Nocturne</div>
+        </a>
+        <a href="jerome.html" class="character">
+            <div class="case">CASE / 002</div>
+            <h3>Jérôme Veyl</h3>
+            <div class="alias">The Laughing Man</div>
+        </a>
+        <a href="isolde.html" class="character">
+            <div class="case">CASE / 003</div>
+            <h3>Isolde Green</h3>
+            <div class="alias">Verdant</div>
+        </a>
+        <a href="elias.html" class="character">
+            <div class="case">CASE / 004</div>
+            <h3>Elias Frost</h3>
+            <div class="alias">Cryo</div>
+        </a>
+        <a href="alistair.html" class="character">
+            <div class="case">CASE / 005</div>
+            <h3>Alistair Crowe</h3>
+            <div class="alias">The Penguin</div>
+        </a>
+        <a href="edmund.html" class="character">
+            <div class="case">CASE / 006</div>
+            <h3>Edmund Rook</h3>
+            <div class="alias">The Riddle</div>
+        </a>
+        <a href="adrian.html" class="character">
+            <div class="case">CASE / 007</div>
+            <h3>Adrian Hale</h3>
+            <div class="alias">The Coin</div>
+        </a>
+        <a href="mateo.html" class="character">
+            <div class="case">CASE / 008</div>
+            <h3>Mateo Varga</h3>
+            <div class="alias">Bane</div>
+        </a>
+</div></section>
+<footer><div class="footer-top"><div class="footer-name">VESPER CITY</div><div class="footer-meta">CENTRAL ARCHIVE / PERSONNEL RECORDS</div></div></footer></body></html>
